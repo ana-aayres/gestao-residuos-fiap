@@ -1,4 +1,5 @@
 package br.com.fiap.model;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -8,19 +9,14 @@ import jakarta.persistence.*;
 @Table(name = "TBL_AGENDAMENTOS")
 public class Agendamento {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "SEQ_AGENDAMENTOS")
-    @SequenceGenerator(
-            name = "SEQ_AGENDAMENTOS",
-            sequenceName = "SEQ_AGENDAMENTOS",
-            allocationSize = 1)
-    //a seguence tem que ser criada diretamente no Oracle, exatamente com o mesmo nome que está aqui
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Alterado para suportar MySQL
     @Column(name = "ID_AGENDAMENTO")
     private Long idAgendamento;
+
     private String veiculo;
     private String rota;
     private LocalDate data;
+
     @OneToMany(mappedBy = "agendamento", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Lixeira> lixeiras;
 
@@ -70,8 +66,8 @@ public class Agendamento {
                 "idAgendamento=" + idAgendamento +
                 ", veiculo='" + veiculo + '\'' +
                 ", rota='" + rota + '\'' +
-                ", data=" + data + '\'' +
-                ", lixeiras=" + lixeiras +
+                ", data=" + data +
+                ", lixeiras=" + (lixeiras != null ? lixeiras.size() : "null") + // Evita referência circular
                 '}';
     }
 }
