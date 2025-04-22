@@ -21,7 +21,7 @@ services:
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
-      retries: 10
+      retries: 5
 
   mysql-prd:
     image: mysql:8.0
@@ -39,7 +39,7 @@ services:
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
-      retries: 10
+      retries: 5
 
   gestaoderesiduos:
     build: .
@@ -51,6 +51,9 @@ services:
     depends_on:
       mysql-dev:
         condition: service_healthy
+      mysql-prd:
+    condition: service_healthy
+
     networks:
       - app_network
     restart: on-failure
