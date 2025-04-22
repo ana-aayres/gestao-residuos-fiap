@@ -1,0 +1,34 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-container
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 170490
+      MYSQL_DATABASE: gestaoderesiduos
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      retries: 10
+
+  gestaoderesiduos:
+    build: .
+    container_name: gestaoderesiduos-container
+    ports:
+      - "8080:8080"
+    environment:
+      - PROFILE=dev
+      - DATABASE_URL=jdbc:mysql://mysql:3306/gestaoderesiduos?allowPublicKeyRetrieval=true&useSSL=false
+      - DATABASE_USER=root
+      - DATABASE_PWD=170490
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: on-failure
+
+volumes:
+  mysql_data:
