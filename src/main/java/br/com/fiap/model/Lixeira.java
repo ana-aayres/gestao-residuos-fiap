@@ -1,33 +1,22 @@
 package br.com.fiap.model;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "TBL_LIXEIRAS")
 public class Lixeira {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "SEQ_LIXEIRAS")
-    @SequenceGenerator(
-            name = "SEQ_LIXEIRAS",
-            sequenceName = "SEQ_LIXEIRAS",
-            allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Ajuste para MySQL compatível
     @Column(name = "ID_LIXEIRA")
     private Long idLixeira;
+
     private String endereco;
     private Double capacidade;
     private Boolean lotada;
+
     @ManyToOne
-    @JoinColumn(name = "idAgendamento")
+    @JoinColumn(name = "ID_AGENDAMENTO") // Corrigido para coincidir com o banco
     private Agendamento agendamento;
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
 
     public Long getIdLixeira() {
         return idLixeira;
@@ -35,6 +24,14 @@ public class Lixeira {
 
     public void setIdLixeira(Long idLixeira) {
         this.idLixeira = idLixeira;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
     public Double getCapacidade() {
@@ -53,6 +50,10 @@ public class Lixeira {
         this.lotada = lotada;
     }
 
+    public Agendamento getAgendamento() {
+        return agendamento;
+    }
+
     public void setAgendamento(Agendamento agendamento) {
         this.agendamento = agendamento;
     }
@@ -64,6 +65,7 @@ public class Lixeira {
                 ", endereco='" + endereco + '\'' +
                 ", capacidade=" + capacidade +
                 ", lotada=" + lotada +
+                ", agendamento=" + (agendamento != null ? agendamento.getIdAgendamento() : "null") +
                 '}';
     }
 }
