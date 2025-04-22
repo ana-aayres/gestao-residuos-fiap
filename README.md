@@ -2,6 +2,7 @@
 Aplicação para gerenciamento eficiente de resíduos
 
 ## Pré-requisitos
+- Maven
 - Java 17
 - Git
 - Docker compose
