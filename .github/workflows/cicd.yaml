@@ -1,0 +1,46 @@
+name: CI/CD com GitHub Actions
+
+on:
+  push:
+    branches:
+      - develop
+      - staging
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v3
+
+    - name: Instalar Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Build do projeto
+      run: mvn clean package -DskipTests
+
+    - name: Executar testes com JUnit
+      run: mvn test
+
+  deploy-staging:
+    if: github.ref == 'refs/heads/staging'
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy para Staging
+      run: echo "Deploy no ambiente de Staging"
+
+  deploy-production:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy para Produção
+      run: echo "Deploy no ambiente de Produção"
