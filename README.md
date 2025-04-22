@@ -9,7 +9,7 @@ Aplicação para gerenciamento eficiente de resíduos
 ## Build e execução
 Para compilar e iniciar o projeto, execute os seguintes comandos:    
 # Clonar o repositório
-git clone https://github.com/seu-usuario/gestao-residuos-fiap.git
+git clone https://github.com/ana-aayres/gestao-residuos-fiap.git
 cd gestao-residuos-fiap
 
 # Construir o projeto com Maven
