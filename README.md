@@ -1,5 +1,5 @@
 # Gestão de Resíduos
-Aplicação para gerenciamento eficiente de resíduos
+Aplicação para gerenciamento eficiente de resíduos.
 
 ## Pré-requisitos
 - Maven
